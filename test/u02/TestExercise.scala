@@ -40,9 +40,26 @@ class TestExercise {
   @Test def composition(): Unit ={
     val twice: Int => Int = x => x*2
     val result: Int = Compose.compose(twice,twice)(5)
-    assertEquals(20, result)
     val result2: Int = Compose.compose(_-1, twice)(5)
+    assertEquals(20, result)
     assertEquals(9, result2)
+
+    val toInt: String => Int = {
+      case n if n == "True" => 1
+      case n if n == "False" => 0
+      case _ => 0
+    }
+
+    val toBool: Int => Boolean = {
+      case n if n == 1 => true
+      case n if n == 0 => false
+      case _ => false
+    }
+
+    val strToBool = Compose.composeGeneral(toBool, toInt)
+    assertEquals(true, strToBool("True"))
+    assertEquals(false, strToBool("False"))
+    assertEquals(false, strToBool("OtherString"))
   }
 
   val x: Rectangle = Rectangle(5, 10)
