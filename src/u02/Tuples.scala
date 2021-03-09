@@ -17,6 +17,16 @@ object Tuples extends App {
     case _ => false
   }
 
+  def checkSecondComponent[A,B](t: Tup2[A,B], b: B): Boolean = t match {
+    case Tup2(e1,e2) if e2==b => true
+    case _ => false
+  }
+
+  def isEquals[A,B](t:(A,B), a: A, b: B): Boolean = t match {
+    case (e1,e2) if e1 == a && e2 == b => true
+    case _ => false
+  }
+
   // note type inference: A=Int, B=Boolean
   println( checkFirstComponent(tu,10) ) // true
   // the following: type mismatch.. not detected by IntelliJ editor
@@ -26,5 +36,5 @@ object Tuples extends App {
   val t = (10,true)
   val t2 = Tuple2(10,true)
 
-  println(t, t2, t == t2) // (10,true), (10,true), true
+  println(t, t2, isEquals((10,true),10,true)) // (10,true), (10,true), true
 }
